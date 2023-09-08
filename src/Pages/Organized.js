@@ -2,6 +2,7 @@ import React,{useContext, useEffect} from 'react';
 import EventContext from "../context/events/EventContext";
 import OrganizedEventCard from '../component/OrganizedEventCard';
 
+
 const Organized = () => {
     const context = useContext(EventContext);
     const {events ,getEvents} = context;

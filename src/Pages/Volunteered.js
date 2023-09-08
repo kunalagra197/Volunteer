@@ -18,7 +18,7 @@ const Volunteered = () => {
       {events.length === 0 && "No notes to display"}
       </div>
       {events.map((event)=>{
-        return <Slide key={event._id} event = {event} />
+        return <Slide key={event._id} event = {event} isvolunteer={true}/>
       })}
  
     </div>

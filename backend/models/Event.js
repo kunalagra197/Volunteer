@@ -37,7 +37,7 @@ const EventSchema = new Schema({
   },
   registrations : [{
     name : String,
-    email : String
+    email : String,
   }]
 
 }); 

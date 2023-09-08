@@ -1,20 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import EventContext from "./EventContext";
 
 const EventState = (props)=>{
-  const host ="http://localhost:5000"
-    const eventsInitial = [];
-      const [events, setEvents] = useState(eventsInitial);
-      const [reg, setreg] = useState(false);
-      // const [user, setUser] = useState({name : "", email : ""});
-
-      // const currentUser = (name, email) => {
-      //   setUser({ name, email });
-      // };
-      
-      // useEffect(() => {
-      //   console.log(user);
-      // }, [user]);
+  const host ="http://localhost:5000";
+    let eventsInitial = [];
+      let [events, setEvents] = useState(eventsInitial);
 
       //Get all the events
       const getallEvents = async ()=>{
@@ -27,12 +17,28 @@ const EventState = (props)=>{
           },
         });
         const json = await response.json();
-        console.log("getall func");
-        console.log(json);
+        // console.log("getall func");
+        // console.log(json);
         setEvents(json);
         
       }
-
+      //Get all the required events
+      const getallrequiredEvents = async ()=>{
+        //api call
+        const response = await fetch(`${host}/api/events/globalfetchrequiredevents`, {
+          method: "GET", 
+          
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token" : localStorage.getItem('token')
+          },
+        });
+        const json = await response.json();
+        // console.log("getall func");
+        // console.log(json);
+        setEvents(json);
+        
+      }
       //Get all the events user has organized
       const getEvents = async ()=>{
         //api call
@@ -46,11 +52,11 @@ const EventState = (props)=>{
         });
         const json = await response.json();
 
-        console.log(json);
+        // console.log(json);
         setEvents(json);
         
       }
-      //Get all the events user has organized
+      //Get all the events user has been participated
       const volunteeredEvents = async ()=>{
         //api call
         const response = await fetch(`${host}/api/events/fetchvolunteeredevents`, {
@@ -63,7 +69,7 @@ const EventState = (props)=>{
         });
         const json = await response.json();
 
-        console.log(json);
+        // console.log(json);
         setEvents(json);
         
       }
@@ -71,7 +77,7 @@ const EventState = (props)=>{
       
 
       //ADD a Event
-      const addEvent = async ( image , title, description , address, date, volunteer)=>{
+      const addEvent = async (image,title,description,address,date,volunteer)=>{
         //api call
         const response = await fetch(`${host}/api/events/addevent`, {
           method: "POST", 
@@ -80,12 +86,12 @@ const EventState = (props)=>{
             "Content-Type": "application/json",
             "auth-token" : localStorage.getItem('token')
           },
-          body: JSON.stringify({image, title, description , address, date, volunteer}),
+          body: JSON.stringify({image,title,description,address,date,volunteer}),
         });
         const event = await response.json();
 
-        console.log("New event:");
-        console.log(date);
+        // console.log("New event:");
+        // console.log(date);
         
         setEvents(events.concat(event));
       }
@@ -171,7 +177,7 @@ const EventState = (props)=>{
       }
 
     return (
-        <EventContext.Provider value={ {events, getallEvents, volunteeredEvents, addEvent, deleteEvent, editEvent, getEvents , register, checkRegistration} }>
+        <EventContext.Provider value={ {events,getallrequiredEvents , getallEvents, volunteeredEvents, addEvent, deleteEvent, editEvent, getEvents , register, checkRegistration} }>
           {props.children}
         </EventContext.Provider>
       )

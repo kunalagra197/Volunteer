@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import Home from './Pages/Home'
 import About from "./Pages/About";
 import Login from "./Pages/Login";
@@ -11,33 +11,45 @@ import NavigationMenu from './component/NavigationMenu';
 import EventState from './context/events/EventState';
 import Organized from './Pages/Organized';
 import Volunteered from './Pages/Volunteered';
-
+import ProtectedRoute from './Pages/ProtectedRoute'
 function App() {
-  // const location = useLocation();
-
-  // const hideHeaderRoutes = ['/login', '/signup']; // Add routes where you want to hide the header
-
-  // const shouldShowHeader = !hideHeaderRoutes.includes(location.pathname);
   return (
     <>
-    <EventState>
-      <BrowserRouter>
-      <NavigationMenu />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      
-        <Route path="/about" element={<About />} />
-       
-        <Route path="/host" element={<Host />} />
-        <Route path="/organized" element={<Organized/>} />
-        <Route path="/volunteered" element={<Volunteered />} />
-      
-        <Route path="*" element={<Pagenotfound />} />
-      </Routes>
-    </BrowserRouter>
-    </EventState>
+      <EventState>
+        <BrowserRouter>
+          <NavigationMenu />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path='/organized'
+              element={
+                <ProtectedRoute>
+                  <Organized />
+                </ProtectedRoute>
+              }
+            />
+              <Route path='/Host'
+              element={
+                <ProtectedRoute>
+                  <Host />
+                </ProtectedRoute>
+              }
+            />
+              <Route path='/volunteered'
+              element={
+                <ProtectedRoute>
+                  < Volunteered/>
+                </ProtectedRoute>
+              }
+            />
+
+
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<Pagenotfound />} />
+          </Routes>
+        </BrowserRouter>
+      </EventState>
     </>
   );
 }
