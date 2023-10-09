@@ -1,7 +1,7 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import EventContext from '../context/events/EventContext';
+// import EventContext from '../context/events/EventContext';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en'; 
 import './recent.css'
@@ -10,10 +10,10 @@ import './recent.css'
 function OrganizedEventCard(props) {
 //   const classes = useStyles();
   const { event } = props;
-  const context = useContext(EventContext);
-  const { register, checkRegistration } = context;
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const context = useContext(EventContext);
+  // const { register, checkRegistration } = context;
+  // const [isRegistered, setIsRegistered] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = async () => {
@@ -22,9 +22,9 @@ function OrganizedEventCard(props) {
   };
 
   // Add this useEffect to update the registration status when the user changes
-  useEffect(() => {
-    setIsRegistered(false);
-  }, [context.user]);
+  // useEffect(() => {
+  //   setIsRegistered(false);
+  // }, [context.user]);
 
   const formatDate = (date) => {
     return dayjs(date).format('MMMM D, YYYY');

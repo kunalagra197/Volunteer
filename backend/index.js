@@ -1,17 +1,15 @@
-const connectToMongo = require('./db');
 const express = require('express')
 const bodyParser = require('body-parser')
 const schedule = require('node-schedule');
 const multer=require('multer')
 const mailer = require('./mailer')
 const path = require("path");
-
-
+const dotenv=require("dotenv")
+dotenv.config({ path: "./.env" })
 var cors = require('cors')
-connectToMongo();
-
+const connectDB =require ('./db.js')
 const app = express();
-const port = 5000;
+const port=5000
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors())
@@ -46,7 +44,9 @@ app.post("/upload-image",upload.single('image'),async(req,res)=>{
 })
 app.use('/api/auth',require('./routes/auth'));
 app.use('/api/events',require('./routes/events'));
-
 app.listen(port, () => {
   console.log(`backend listening at http://localhost:${port}`)
 }) 
+connectDB();
+
+ 

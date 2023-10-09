@@ -7,7 +7,13 @@ const { body, validationResult } = require("express-validator");
 
 router.get("/globalfetchevents", async (req, res) => { 
         const events = await Event.find();
-        res.json(events);
+        const requiredevents=[];
+        for(var i=0;i<events.length;i++)
+        {
+            if(events[i].volunteer>0)
+            requiredevents.push(events[i])
+        }
+        res.json(requiredevents);
        
 });
 router.get("/globalfetchrequiredevents", fetchuser, async (req, res) => {
@@ -33,7 +39,7 @@ router.get("/globalfetchrequiredevents", fetchuser, async (req, res) => {
             for(var j=0;j<volunteeredevents.length;j++)
             {
                 const a=JSON.stringify(volunteeredevents[j]._id),b=JSON.stringify(totalevents[i]._id)
-                if(a===b)
+                if(a===b || totalevents[i].volunteer===0)
                 {
                     ok=false;
                     break;
@@ -134,6 +140,7 @@ router.post(
         const userId = req.user.id;
         const user = await User.findById(userId).select("-password");
         event.registrations.push({ name: user.name, email: user.email });
+        event.volunteer=event.volunteer-1;
         //adding this event to user registered events array
         
         user.registeredEvents.push(req.params.id);

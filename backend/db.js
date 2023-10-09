@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
-
-const mongoURI ="mongodb+srv://kunalagra197:kunalagrawal@atlascluster.ttrq1f8.mongodb.net/Volunteer?retryWrites=true&w=majority"
-
-
-const connectToMongo = ()=>{
-    mongoose.set('strictQuery', false);
-    
-    mongoose.connect(mongoURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        // useCreateIndex: true,
-        // useFindAndModify: false,
-       }).then(() => console.log("Database connected!")).catch(err => console.log(err));
+const DB=process.env.MONGO_URI
+const connectDB= ()=>{
+mongoose
+  .connect(DB)
+  .then(() => {
+    console.log("Successfully connected ");
+  })
+  .catch((error) => {
+    console.log(`can not connect to database, ${error}`);
+  });
 }
- 
-module.exports = connectToMongo;   
+module.exports= connectDB

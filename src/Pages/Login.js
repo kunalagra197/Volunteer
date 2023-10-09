@@ -6,9 +6,8 @@ import {
   MDBCol,
   MDBRow,
   MDBBtn,
-  MDBIcon,
   MDBInput,
-  MDBCheckbox
+
 }
 from 'mdb-react-ui-kit';
 
@@ -28,7 +27,7 @@ const Login = () => {
               body: JSON.stringify({email: credentials.email, password: credentials.password }),
           });
           const json = await response.json();
-          console.log(json);
+       
           if(json.success){
             //save the authtoken and redirect
             localStorage.setItem('token', json.authtoken);

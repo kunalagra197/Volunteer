@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import EventContext from '../context/events/EventContext';
@@ -9,13 +9,14 @@ import './recent.css'
 function Slide(props) {
   const { event } = props;
   const context = useContext(EventContext);
-  const { register, checkRegistration } = context;
+  const { register } = context;
   // const [isRegistered, setIsRegistered] = useState(false);
   
 
   const handleVolunteer = async () => {
       // await console.log(await checkRegistration(event._id));
       await register(event._id);
+      
      props.setisRender(props.isRender+1);
       // setIsRegistered(true);
       

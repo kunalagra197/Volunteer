@@ -49,12 +49,20 @@ const handleSubmit = async(e)=>{
    
   
   }
-
+  const handlePositiveInteger=async(e)=>{
+    let num=Number(e.target.value)
+    if(Number.isInteger(num) && num>0 && num<50)
+    {
+      // console.log(num)
+      setEvent({...event,[e.target.name]:e.target.value})
+    }
+  }
+  
   return (
     <>
     <div className='container'>
     <form onSubmit={handleSubmit}>
-  <div className="mb-3">
+  <div className="mb-3 my-1">
     <label htmlFor="image" className="form-label">Image</label>
     <input type="file" name="image"  className="form-control" id="image"  onChange={handleFileUpload} accept="image/*"/>
   </div>
@@ -72,12 +80,12 @@ const handleSubmit = async(e)=>{
   </div>
   <div className="mb-3">
     <label htmlFor="volunteer" className="form-label">Volunteer</label>
-    <input type="number" className="form-control" id="volunteer" name="volunteer" value ={event.volunteer} onChange={onChange}/>
+    <input type="number" className="form-control" id="volunteer" name="volunteer" value ={event.volunteer} onChange={handlePositiveInteger}  onKeyDown={ e => ( e.keyCode === 69 || e.keyCode === 190 ) && e.preventDefault() }
+    />
   </div>
   
   
-  <button type="submit" className="btn btn-primary">Submit</button>
-
+    <div className="mb-3">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         disablePast
@@ -90,6 +98,8 @@ const handleSubmit = async(e)=>{
         // You can use the selectedDate value in your form input as needed
       />
     </LocalizationProvider>
+    </div>
+  <div className="mb-3"><button type="submit" className="btn btn-primary">Submit</button></div>
 </form>
 
     </div>
